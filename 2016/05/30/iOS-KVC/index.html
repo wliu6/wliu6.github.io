@@ -17,25 +17,25 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"blog.pirat6.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"wliu6.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
   <meta name="description" content="本文意在解释KVC原理，使用KVC并不会调用属性set方法，本文也会告知读者如何优化KVC。">
 <meta name="keywords" content="iOS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="大话KVC">
-<meta property="og:url" content="http://blog.pirat6.com/2016/05/30/iOS-KVC/index.html">
+<meta property="og:url" content="http://wliu6.github.io/2016/05/30/iOS-KVC/index.html">
 <meta property="og:site_name" content="w66&#39;s blog">
 <meta property="og:description" content="本文意在解释KVC原理，使用KVC并不会调用属性set方法，本文也会告知读者如何优化KVC。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://blog.pirat6.com/resourse/iOS/KVC/0.png">
+<meta property="og:image" content="http://wliu6.github.io/resourse/iOS/KVC/0.png">
 <meta property="og:updated_time" content="2021-04-21T08:59:21.058Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="大话KVC">
 <meta name="twitter:description" content="本文意在解释KVC原理，使用KVC并不会调用属性set方法，本文也会告知读者如何优化KVC。">
-<meta name="twitter:image" content="http://blog.pirat6.com/resourse/iOS/KVC/0.png">
+<meta name="twitter:image" content="http://wliu6.github.io/resourse/iOS/KVC/0.png">
 
-<link rel="canonical" href="http://blog.pirat6.com/2016/05/30/iOS-KVC/">
+<link rel="canonical" href="http://wliu6.github.io/2016/05/30/iOS-KVC/">
 
 
 <script id="page-configurations">
@@ -154,7 +154,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://blog.pirat6.com/2016/05/30/iOS-KVC/">
+    <link itemprop="mainEntityOfPage" href="http://wliu6.github.io/2016/05/30/iOS-KVC/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">

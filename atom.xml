@@ -5,9 +5,9 @@
   <subtitle>A man, will eventually become pirate king.</subtitle>
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://blog.pirat6.com/"/>
+  <link href="http://wliu6.github.io/"/>
   <updated>2021-06-04T04:24:59.202Z</updated>
-  <id>http://blog.pirat6.com/</id>
+  <id>http://wliu6.github.io/</id>
   
   <author>
     <name>王六六</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>swift begin</title>
-    <link href="http://blog.pirat6.com/2019/10/03/swift-learn-01/"/>
-    <id>http://blog.pirat6.com/2019/10/03/swift-learn-01/</id>
+    <link href="http://wliu6.github.io/2019/10/03/swift-learn-01/"/>
+    <id>http://wliu6.github.io/2019/10/03/swift-learn-01/</id>
     <published>2019-10-03T06:14:39.000Z</published>
     <updated>2021-06-04T04:24:59.202Z</updated>
     
@@ -32,17 +32,17 @@
     
     </summary>
     
-      <category term="development" scheme="http://blog.pirat6.com/categories/development/"/>
+      <category term="development" scheme="http://wliu6.github.io/categories/development/"/>
     
     
-      <category term="iOS" scheme="http://blog.pirat6.com/tags/iOS/"/>
+      <category term="iOS" scheme="http://wliu6.github.io/tags/iOS/"/>
     
   </entry>
   
   <entry>
     <title>网易云信 —— 版本管理方案</title>
-    <link href="http://blog.pirat6.com/2018/07/23/yx-im-scheme/"/>
-    <id>http://blog.pirat6.com/2018/07/23/yx-im-scheme/</id>
+    <link href="http://wliu6.github.io/2018/07/23/yx-im-scheme/"/>
+    <id>http://wliu6.github.io/2018/07/23/yx-im-scheme/</id>
     <published>2018-07-23T11:58:36.000Z</published>
     <updated>2021-06-04T04:24:01.237Z</updated>
     
@@ -57,17 +57,17 @@
     
     </summary>
     
-      <category term="development" scheme="http://blog.pirat6.com/categories/development/"/>
+      <category term="development" scheme="http://wliu6.github.io/categories/development/"/>
     
     
-      <category term="iOS" scheme="http://blog.pirat6.com/tags/iOS/"/>
+      <category term="iOS" scheme="http://wliu6.github.io/tags/iOS/"/>
     
   </entry>
   
   <entry>
     <title>运营策略 —— 对赌营销</title>
-    <link href="http://blog.pirat6.com/2018/07/15/marketing-strategy/"/>
-    <id>http://blog.pirat6.com/2018/07/15/marketing-strategy/</id>
+    <link href="http://wliu6.github.io/2018/07/15/marketing-strategy/"/>
+    <id>http://wliu6.github.io/2018/07/15/marketing-strategy/</id>
     <published>2018-07-15T09:31:53.000Z</published>
     <updated>2021-04-21T08:59:21.059Z</updated>
     
@@ -81,17 +81,17 @@
     
     </summary>
     
-      <category term="Marketing" scheme="http://blog.pirat6.com/categories/Marketing/"/>
+      <category term="Marketing" scheme="http://wliu6.github.io/categories/Marketing/"/>
     
     
-      <category term="Marketing" scheme="http://blog.pirat6.com/tags/Marketing/"/>
+      <category term="Marketing" scheme="http://wliu6.github.io/tags/Marketing/"/>
     
   </entry>
   
   <entry>
     <title>CocoaPods Error —— [!] RPC failed;</title>
-    <link href="http://blog.pirat6.com/2017/11/21/cocoapods-issue1/"/>
-    <id>http://blog.pirat6.com/2017/11/21/cocoapods-issue1/</id>
+    <link href="http://wliu6.github.io/2017/11/21/cocoapods-issue1/"/>
+    <id>http://wliu6.github.io/2017/11/21/cocoapods-issue1/</id>
     <published>2017-11-21T08:15:43.000Z</published>
     <updated>2021-04-21T08:59:21.057Z</updated>
     
@@ -105,17 +105,17 @@
     
     </summary>
     
-      <category term="development" scheme="http://blog.pirat6.com/categories/development/"/>
+      <category term="development" scheme="http://wliu6.github.io/categories/development/"/>
     
     
-      <category term="iOS" scheme="http://blog.pirat6.com/tags/iOS/"/>
+      <category term="iOS" scheme="http://wliu6.github.io/tags/iOS/"/>
     
   </entry>
   
   <entry>
     <title>Git —— 数据恢复</title>
-    <link href="http://blog.pirat6.com/2017/07/23/git-issue0/"/>
-    <id>http://blog.pirat6.com/2017/07/23/git-issue0/</id>
+    <link href="http://wliu6.github.io/2017/07/23/git-issue0/"/>
+    <id>http://wliu6.github.io/2017/07/23/git-issue0/</id>
     <published>2017-07-23T06:30:46.000Z</published>
     <updated>2021-04-21T08:59:21.057Z</updated>
     
@@ -129,17 +129,17 @@
     
     </summary>
     
-      <category term="development" scheme="http://blog.pirat6.com/categories/development/"/>
+      <category term="development" scheme="http://wliu6.github.io/categories/development/"/>
     
     
-      <category term="git" scheme="http://blog.pirat6.com/tags/git/"/>
+      <category term="git" scheme="http://wliu6.github.io/tags/git/"/>
     
   </entry>
   
   <entry>
     <title>CocoaPods Error —— [!] Oh no, an error occurred.</title>
-    <link href="http://blog.pirat6.com/2017/06/26/cocoapods-issue0/"/>
-    <id>http://blog.pirat6.com/2017/06/26/cocoapods-issue0/</id>
+    <link href="http://wliu6.github.io/2017/06/26/cocoapods-issue0/"/>
+    <id>http://wliu6.github.io/2017/06/26/cocoapods-issue0/</id>
     <published>2017-06-26T03:23:06.000Z</published>
     <updated>2021-04-21T08:59:21.057Z</updated>
     
@@ -153,17 +153,17 @@
     
     </summary>
     
-      <category term="development" scheme="http://blog.pirat6.com/categories/development/"/>
+      <category term="development" scheme="http://wliu6.github.io/categories/development/"/>
     
     
-      <category term="iOS" scheme="http://blog.pirat6.com/tags/iOS/"/>
+      <category term="iOS" scheme="http://wliu6.github.io/tags/iOS/"/>
     
   </entry>
   
   <entry>
     <title>xcodebuild issue (2) —— EXPORT FAILED</title>
-    <link href="http://blog.pirat6.com/2017/05/03/iOS-compileIssue/"/>
-    <id>http://blog.pirat6.com/2017/05/03/iOS-compileIssue/</id>
+    <link href="http://wliu6.github.io/2017/05/03/iOS-compileIssue/"/>
+    <id>http://wliu6.github.io/2017/05/03/iOS-compileIssue/</id>
     <published>2017-05-03T13:59:05.000Z</published>
     <updated>2021-04-21T08:59:21.059Z</updated>
     
@@ -177,17 +177,17 @@
     
     </summary>
     
-      <category term="development" scheme="http://blog.pirat6.com/categories/development/"/>
+      <category term="development" scheme="http://wliu6.github.io/categories/development/"/>
     
     
-      <category term="iOS" scheme="http://blog.pirat6.com/tags/iOS/"/>
+      <category term="iOS" scheme="http://wliu6.github.io/tags/iOS/"/>
     
   </entry>
   
   <entry>
     <title>xcodebuild issue (1) —— unable to find utility &quot;PackageApplication&quot;</title>
-    <link href="http://blog.pirat6.com/2017/01/05/iOS-compileIssue-1/"/>
-    <id>http://blog.pirat6.com/2017/01/05/iOS-compileIssue-1/</id>
+    <link href="http://wliu6.github.io/2017/01/05/iOS-compileIssue-1/"/>
+    <id>http://wliu6.github.io/2017/01/05/iOS-compileIssue-1/</id>
     <published>2017-01-05T08:10:04.000Z</published>
     <updated>2021-04-21T08:59:21.058Z</updated>
     
@@ -201,17 +201,17 @@
     
     </summary>
     
-      <category term="development" scheme="http://blog.pirat6.com/categories/development/"/>
+      <category term="development" scheme="http://wliu6.github.io/categories/development/"/>
     
     
-      <category term="iOS" scheme="http://blog.pirat6.com/tags/iOS/"/>
+      <category term="iOS" scheme="http://wliu6.github.io/tags/iOS/"/>
     
   </entry>
   
   <entry>
     <title>CocoaPods —— 创建私有库</title>
-    <link href="http://blog.pirat6.com/2016/07/20/cocoapods-private-repo-md/"/>
-    <id>http://blog.pirat6.com/2016/07/20/cocoapods-private-repo-md/</id>
+    <link href="http://wliu6.github.io/2016/07/20/cocoapods-private-repo-md/"/>
+    <id>http://wliu6.github.io/2016/07/20/cocoapods-private-repo-md/</id>
     <published>2016-07-20T05:36:29.000Z</published>
     <updated>2021-04-21T08:59:21.057Z</updated>
     
@@ -225,17 +225,17 @@
     
     </summary>
     
-      <category term="development" scheme="http://blog.pirat6.com/categories/development/"/>
+      <category term="development" scheme="http://wliu6.github.io/categories/development/"/>
     
     
-      <category term="iOS" scheme="http://blog.pirat6.com/tags/iOS/"/>
+      <category term="iOS" scheme="http://wliu6.github.io/tags/iOS/"/>
     
   </entry>
   
   <entry>
     <title>iOS Variable Argument</title>
-    <link href="http://blog.pirat6.com/2016/06/12/iOS-VariableParams/"/>
-    <id>http://blog.pirat6.com/2016/06/12/iOS-VariableParams/</id>
+    <link href="http://wliu6.github.io/2016/06/12/iOS-VariableParams/"/>
+    <id>http://wliu6.github.io/2016/06/12/iOS-VariableParams/</id>
     <published>2016-06-12T12:08:00.000Z</published>
     <updated>2021-04-21T08:59:21.058Z</updated>
     
@@ -249,17 +249,17 @@
     
     </summary>
     
-      <category term="development" scheme="http://blog.pirat6.com/categories/development/"/>
+      <category term="development" scheme="http://wliu6.github.io/categories/development/"/>
     
     
-      <category term="iOS" scheme="http://blog.pirat6.com/tags/iOS/"/>
+      <category term="iOS" scheme="http://wliu6.github.io/tags/iOS/"/>
     
   </entry>
   
   <entry>
     <title>大话KVC</title>
-    <link href="http://blog.pirat6.com/2016/05/30/iOS-KVC/"/>
-    <id>http://blog.pirat6.com/2016/05/30/iOS-KVC/</id>
+    <link href="http://wliu6.github.io/2016/05/30/iOS-KVC/"/>
+    <id>http://wliu6.github.io/2016/05/30/iOS-KVC/</id>
     <published>2016-05-30T03:23:06.000Z</published>
     <updated>2021-04-21T08:59:21.058Z</updated>
     
@@ -273,17 +273,17 @@
     
     </summary>
     
-      <category term="development" scheme="http://blog.pirat6.com/categories/development/"/>
+      <category term="development" scheme="http://wliu6.github.io/categories/development/"/>
     
     
-      <category term="iOS" scheme="http://blog.pirat6.com/tags/iOS/"/>
+      <category term="iOS" scheme="http://wliu6.github.io/tags/iOS/"/>
     
   </entry>
   
   <entry>
     <title>hexo 使用图片</title>
-    <link href="http://blog.pirat6.com/2016/05/21/hexo-image/"/>
-    <id>http://blog.pirat6.com/2016/05/21/hexo-image/</id>
+    <link href="http://wliu6.github.io/2016/05/21/hexo-image/"/>
+    <id>http://wliu6.github.io/2016/05/21/hexo-image/</id>
     <published>2016-05-21T10:14:11.000Z</published>
     <updated>2021-04-21T08:59:21.057Z</updated>
     
@@ -297,17 +297,17 @@
     
     </summary>
     
-      <category term="blog" scheme="http://blog.pirat6.com/categories/blog/"/>
+      <category term="blog" scheme="http://wliu6.github.io/categories/blog/"/>
     
     
-      <category term="hexo" scheme="http://blog.pirat6.com/tags/hexo/"/>
+      <category term="hexo" scheme="http://wliu6.github.io/tags/hexo/"/>
     
   </entry>
   
   <entry>
     <title>hexo搭建博客</title>
-    <link href="http://blog.pirat6.com/2016/05/02/hexo-initialize/"/>
-    <id>http://blog.pirat6.com/2016/05/02/hexo-initialize/</id>
+    <link href="http://wliu6.github.io/2016/05/02/hexo-initialize/"/>
+    <id>http://wliu6.github.io/2016/05/02/hexo-initialize/</id>
     <published>2016-05-02T00:49:21.000Z</published>
     <updated>2021-04-21T08:59:21.058Z</updated>
     
@@ -321,17 +321,17 @@
     
     </summary>
     
-      <category term="blog" scheme="http://blog.pirat6.com/categories/blog/"/>
+      <category term="blog" scheme="http://wliu6.github.io/categories/blog/"/>
     
     
-      <category term="hexo" scheme="http://blog.pirat6.com/tags/hexo/"/>
+      <category term="hexo" scheme="http://wliu6.github.io/tags/hexo/"/>
     
   </entry>
   
   <entry>
     <title>CocoaPods Error —— 指定版本问题</title>
-    <link href="http://blog.pirat6.com/2015/12/10/cocoapods-issue2-md/"/>
-    <id>http://blog.pirat6.com/2015/12/10/cocoapods-issue2-md/</id>
+    <link href="http://wliu6.github.io/2015/12/10/cocoapods-issue2-md/"/>
+    <id>http://wliu6.github.io/2015/12/10/cocoapods-issue2-md/</id>
     <published>2015-12-10T12:28:30.000Z</published>
     <updated>2021-04-21T08:59:21.057Z</updated>
     
@@ -345,10 +345,10 @@
     
     </summary>
     
-      <category term="development" scheme="http://blog.pirat6.com/categories/development/"/>
+      <category term="development" scheme="http://wliu6.github.io/categories/development/"/>
     
     
-      <category term="iOS" scheme="http://blog.pirat6.com/tags/iOS/"/>
+      <category term="iOS" scheme="http://wliu6.github.io/tags/iOS/"/>
     
   </entry>
   

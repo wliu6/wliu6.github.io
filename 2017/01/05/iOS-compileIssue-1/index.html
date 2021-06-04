@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.pirat6.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="更新到Xcode8.3之后发现，之前的打包脚本不能用了，不能用了。本文介绍如何解该问题。">
+<meta name="keywords" content="iOS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="xcodebuild issue (1) —— unable to find utility &quot;PackageApplication&quot;">
+<meta property="og:url" content="http://blog.pirat6.com/2017/01/05/iOS-compileIssue-1/index.html">
+<meta property="og:site_name" content="w66&#39;s blog">
+<meta property="og:description" content="更新到Xcode8.3之后发现，之前的打包脚本不能用了，不能用了。本文介绍如何解该问题。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2021-04-21T08:59:21.058Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="xcodebuild issue (1) —— unable to find utility &quot;PackageApplication&quot;">
+<meta name="twitter:description" content="更新到Xcode8.3之后发现，之前的打包脚本不能用了，不能用了。本文介绍如何解该问题。">
+
+<link rel="canonical" href="http://blog.pirat6.com/2017/01/05/iOS-compileIssue-1/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>xcodebuild issue (1) —— unable to find utility "PackageApplication" | w66's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">w66's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">A man, will eventually become pirate king.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://blog.pirat6.com/2017/01/05/iOS-compileIssue-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="王六六">
+      <meta itemprop="description" content="做个有知识的流氓丨娶个有气质的文盲">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="w66's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          xcodebuild issue (1) —— unable to find utility "PackageApplication"
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-01-05 16:10:04" itemprop="dateCreated datePublished" datetime="2017-01-05T16:10:04+08:00">2017-01-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-04-21 16:59:21" itemprop="dateModified" datetime="2021-04-21T16:59:21+08:00">2021-04-21</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/development/" itemprop="url" rel="index"><span itemprop="name">development</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote>
+<p>更新到Xcode8.3之后发现，之前的打包脚本不能用了，不能用了。<br>本文介绍如何解该问题。</p>
+</blockquote>
+<a id="more"></a>
+<hr>
+<p><br></p>
+<h1 id="脚本报错信息"><a href="#脚本报错信息" class="headerlink" title="脚本报错信息"></a>脚本报错信息</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xcrun: error: unable to find utility &quot;PackageApplication&quot;, not a developer tool or in PATH</span><br></pre></td></tr></table></figure>
+<p><br></p>
+<h1 id="分析原因并解决"><a href="#分析原因并解决" class="headerlink" title="分析原因并解决"></a>分析原因并解决</h1><h2 id="方案一"><a href="#方案一" class="headerlink" title="方案一"></a>方案一</h2><p>无法找到”PackageApplication”，想了是不是把这个软件放到该目录下就可以了。先去找个旧版的Xcode里面copy一份过来<br>放到下面这个目录：<br><code>/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/</code><br>继续<code>xcrun</code>，发现PackageApplication无法执行，给个执行权限就好了。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo xcode-select -switch /Applications/Xcode.app/Contents/Developer/</span><br><span class="line">$ chmod +x /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/PackageApplication</span><br></pre></td></tr></table></figure></p>
+<h2 id="方案二"><a href="#方案二" class="headerlink" title="方案二"></a>方案二</h2><p>后来查了下文档，发现<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PackageApplication is removed from Xcode 8.3.</span><br></pre></td></tr></table></figure></p>
+<p>在强行使用<code>PackageApplication</code>的话不太友好。Apple推荐Xcode&ensp;8.3之后使用xcodebuild导出.ipa文件。将导入.ipa文件的是cmd换成如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">xcodebuild \</span><br><span class="line">-exportArchive \</span><br><span class="line">-archivePath &quot;$&#123;PROJECT_BUILDDIR&#125;/$&#123;SCHEME_NAME&#125;.xcarchive&quot; \</span><br><span class="line">-exportPath &quot;$&#123;BUILD_OUTPUT_DIR&#125;&quot;</span><br></pre></td></tr></table></figure>
+<p>发现汇报错：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xcodebuild: error: The flag -exportOptionsPlist is required when specifying -exportArchive.</span><br></pre></td></tr></table></figure></p>
+<p>原来通过.xcarchive导出.ipa，有一个必要参数-exportOptionsPlist，改成如下，便可成功打包。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">xcodebuild \</span><br><span class="line">-exportArchive \</span><br><span class="line">-archivePath &quot;$&#123;PROJECT_BUILDDIR&#125;/$&#123;SCHEME_NAME&#125;.xcarchive&quot; \</span><br><span class="line">-exportOptionsPlist &quot;$&#123;EXPORT_PLIST&#125;&quot; \</span><br><span class="line">-exportPath &quot;$&#123;BUILD_OUTPUT_DIR&#125;&quot;</span><br></pre></td></tr></table></figure></p>
+<p>但是这个option的参数是啥？<br>直接看文档吧。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ xcodebuild -help</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"># -exportOptionsPlist 参数说明</span><br><span class="line">-exportOptionsPlist PATH    specifies a path to a plist file that configures archive exporting</span><br><span class="line"></span><br><span class="line"># plist 文件的参数说明如下</span><br><span class="line">Available keys for -exportOptionsPlist:</span><br><span class="line"></span><br><span class="line">	compileBitcode : Bool</span><br><span class="line"></span><br><span class="line">		For non-App Store exports, should Xcode re-compile the app from bitcode? Defaults to YES.</span><br><span class="line"></span><br><span class="line">	embedOnDemandResourcesAssetPacksInBundle : Bool</span><br><span class="line"></span><br><span class="line">		For non-App Store exports, if the app uses On Demand Resources and this is YES, asset packs are embedded in the app bundle so that the app can be tested without a server to host asset packs. Defaults to YES unless onDemandResourcesAssetPacksBaseURL is specified.</span><br><span class="line"></span><br><span class="line">	iCloudContainerEnvironment : String</span><br><span class="line"></span><br><span class="line">		If the app is using CloudKit, this configures the &quot;com.apple.developer.icloud-container-environment&quot; entitlement. Available options vary depending on the type of provisioning profile used, but may include: Development and Production.</span><br><span class="line"></span><br><span class="line">	installerSigningCertificate : String</span><br><span class="line"></span><br><span class="line">		For manual signing only. Provide a certificate name, SHA-1 hash, or automatic selector to use for signing. Automatic selectors allow Xcode to pick the newest installed certificate of a particular type. The available automatic selectors are &quot;Mac Installer Distribution&quot; and &quot;Developer ID Installer&quot;. Defaults to an automatic certificate selector matching the current distribution method.</span><br><span class="line"></span><br><span class="line">	manifest : Dictionary</span><br><span class="line"></span><br><span class="line">		For non-App Store exports, users can download your app over the web by opening your distribution manifest file in a web browser. To generate a distribution manifest, the value of this key should be a dictionary with three sub-keys: appURL, displayImageURL, fullSizeImageURL. The additional sub-key assetPackManifestURL is required when using on-demand resources.</span><br><span class="line"></span><br><span class="line">	method : String</span><br><span class="line"></span><br><span class="line">		Describes how Xcode should export the archive. Available options: app-store, ad-hoc, package, enterprise, development, developer-id, and mac-application. The list of options varies based on the type of archive. Defaults to development.</span><br><span class="line"></span><br><span class="line">	onDemandResourcesAssetPacksBaseURL : String</span><br><span class="line"></span><br><span class="line">		For non-App Store exports, if the app uses On Demand Resources and embedOnDemandResourcesAssetPacksInBundle isn&apos;t YES, this should be a base URL specifying where asset packs are going to be hosted. This configures the app to download asset packs from the specified URL.</span><br><span class="line"></span><br><span class="line">	provisioningProfiles : Dictionary</span><br><span class="line"></span><br><span class="line">		For manual signing only. Specify the provisioning profile to use for each executable in your app. Keys in this dictionary are the bundle identifiers of executables; values are the provisioning profile name or UUID to use.</span><br><span class="line"></span><br><span class="line">	signingCertificate : String</span><br><span class="line"></span><br><span class="line">		For manual signing only. Provide a certificate name, SHA-1 hash, or automatic selector to use for signing. Automatic selectors allow Xcode to pick the newest installed certificate of a particular type. The available automatic selectors are &quot;Mac App Distribution&quot;, &quot;iOS Developer&quot;, &quot;iOS Distribution&quot;, &quot;Developer ID Application&quot;, and &quot;Mac Developer&quot;. Defaults to an automatic certificate selector matching the current distribution method.</span><br><span class="line"></span><br><span class="line">	signingStyle : String</span><br><span class="line"></span><br><span class="line">		The signing style to use when re-signing the app for distribution. Options are manual or automatic. Apps that were automatically signed when archived can be signed manually or automatically during distribution, and default to automatic. Apps that were manually signed when archived must be manually signed during distribtion, so the value of signingStyle is ignored.</span><br><span class="line"></span><br><span class="line">	stripSwiftSymbols : Bool</span><br><span class="line"></span><br><span class="line">		Should symbols be stripped from Swift libraries in your IPA? Defaults to YES.</span><br><span class="line"></span><br><span class="line">	teamID : String</span><br><span class="line"></span><br><span class="line">		The Developer Portal team to use for this export. Defaults to the team used to build the archive.</span><br><span class="line"></span><br><span class="line">	thinning : String</span><br><span class="line"></span><br><span class="line">		For non-App Store exports, should Xcode thin the package for one or more device variants? Available options: &lt;none&gt; (Xcode produces a non-thinned universal app), &lt;thin-for-all-variants&gt; (Xcode produces a universal app and all available thinned variants), or a model identifier for a specific device (e.g. &quot;iPhone7,1&quot;). Defaults to &lt;none&gt;.</span><br><span class="line"></span><br><span class="line">	uploadBitcode : Bool</span><br><span class="line"></span><br><span class="line">		For App Store exports, should the package include bitcode? Defaults to YES.</span><br><span class="line"></span><br><span class="line">	uploadSymbols : Bool</span><br><span class="line"></span><br><span class="line">		For App Store exports, should the package include symbols? Defaults to YES.</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/iOS/" rel="tag"># iOS</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2016/07/20/cocoapods-private-repo-md/" rel="prev" title="CocoaPods —— 创建私有库">
+      <i class="fa fa-chevron-left"></i> CocoaPods —— 创建私有库
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2017/05/03/iOS-compileIssue/" rel="next" title="xcodebuild issue (2) —— EXPORT FAILED">
+      xcodebuild issue (2) —— EXPORT FAILED <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#脚本报错信息"><span class="nav-number">1.</span> <span class="nav-text">脚本报错信息</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#分析原因并解决"><span class="nav-number">2.</span> <span class="nav-text">分析原因并解决</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#方案一"><span class="nav-number">2.1.</span> <span class="nav-text">方案一</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方案二"><span class="nav-number">2.2.</span> <span class="nav-text">方案二</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">王六六</p>
+  <div class="site-description" itemprop="description">做个有知识的流氓丨娶个有气质的文盲</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">王六六</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

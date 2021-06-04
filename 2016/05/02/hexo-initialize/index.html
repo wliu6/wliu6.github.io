@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.pirat6.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="本文讲述如何使用“hexo” + “GitHub Page”搭建自己的博客。">
+<meta name="keywords" content="hexo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hexo搭建博客">
+<meta property="og:url" content="http://blog.pirat6.com/2016/05/02/hexo-initialize/index.html">
+<meta property="og:site_name" content="w66&#39;s blog">
+<meta property="og:description" content="本文讲述如何使用“hexo” + “GitHub Page”搭建自己的博客。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://blog.pirat6.com/resourse/hexo/initialize/0.jpg">
+<meta property="og:image" content="http://blog.pirat6.com/resourse/hexo/initialize/1.png">
+<meta property="og:image" content="http://blog.pirat6.com/resourse/hexo/initialize/2.png">
+<meta property="og:image" content="http://blog.pirat6.com/resourse/hexo/initialize/3.png">
+<meta property="og:image" content="http://blog.pirat6.com/resourse/hexo/initialize/4.png">
+<meta property="og:image" content="http://blog.pirat6.com/resourse/hexo/initialize/5.png">
+<meta property="og:image" content="http://blog.pirat6.com/resourse/hexo/initialize/6.png">
+<meta property="og:image" content="http://blog.pirat6.com/resourse/hexo/initialize/7.png">
+<meta property="og:image" content="http://blog.pirat6.com/resourse/hexo/initialize/8.png">
+<meta property="og:image" content="http://blog.pirat6.com/resourse/hexo/initialize/9.png">
+<meta property="og:image" content="http://blog.pirat6.com/resourse/hexo/initialize/10.png">
+<meta property="og:updated_time" content="2021-04-21T08:59:21.058Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="hexo搭建博客">
+<meta name="twitter:description" content="本文讲述如何使用“hexo” + “GitHub Page”搭建自己的博客。">
+<meta name="twitter:image" content="http://blog.pirat6.com/resourse/hexo/initialize/0.jpg">
+
+<link rel="canonical" href="http://blog.pirat6.com/2016/05/02/hexo-initialize/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>hexo搭建博客 | w66's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">w66's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">A man, will eventually become pirate king.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://blog.pirat6.com/2016/05/02/hexo-initialize/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="王六六">
+      <meta itemprop="description" content="做个有知识的流氓丨娶个有气质的文盲">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="w66's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          hexo搭建博客
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-05-02 08:49:21" itemprop="dateCreated datePublished" datetime="2016-05-02T08:49:21+08:00">2016-05-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-04-21 16:59:21" itemprop="dateModified" datetime="2021-04-21T16:59:21+08:00">2021-04-21</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/blog/" itemprop="url" rel="index"><span itemprop="name">blog</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote>
+<p>本文讲述如何使用“hexo” + “GitHub Page”搭建自己的博客。<br><img src="/resourse/hexo/initialize/0.jpg" alt="img0"></p>
+</blockquote>
+<a id="more"></a>
+<hr>
+<p><br></p>
+<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><h2 id="Dependencies"><a href="#Dependencies" class="headerlink" title="Dependencies"></a>Dependencies</h2><ol>
+<li>node</li>
+<li>git（使用Mac、Ubuntu等自带git的操作系统不用处理）</li>
+<li>GitHub</li>
+</ol>
+<h2 id="Optional"><a href="#Optional" class="headerlink" title="Optional"></a>Optional</h2><ol>
+<li>register domain</li>
+</ol>
+<!-- 文章主体开始 -->
+<p><br></p>
+<h1 id="创建GitHub-page仓库"><a href="#创建GitHub-page仓库" class="headerlink" title="创建GitHub page仓库"></a>创建GitHub page仓库</h1><p>使用“hexo” + “GitHub Page”搭建博客，首先需要一个GitHub Page repo。<br><img src="/resourse/hexo/initialize/1.png" alt="img1"><img src="/resourse/hexo/initialize/2.png" alt="img2"></p>
+<p><br></p>
+<h1 id="Blog-Compiling"><a href="#Blog-Compiling" class="headerlink" title="Blog Compiling"></a>Blog Compiling</h1><h2 id="全局安装hexo"><a href="#全局安装hexo" class="headerlink" title="全局安装hexo"></a>全局安装hexo</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo npm install -g hexo</span><br></pre></td></tr></table></figure>
+<h2 id="初始化hexo工程"><a href="#初始化hexo工程" class="headerlink" title="初始化hexo工程"></a>初始化hexo工程</h2><p>Node和Git都安装好后，首先创建一个文件夹，用于存放hexo的工程文件，然后进入该文件夹里初始化Hexo工程。由于在Mac下使用npm安装hexo，会自动关联安装hexo-cli，可以直接使用命令行工具进行初始化：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo init</span><br></pre></td></tr></table></figure></p>
+<p>文件夹下目录结构入下<br><img src="/resourse/hexo/initialize/3.png" alt="img3"></p>
+<h2 id="hexo命令"><a href="#hexo命令" class="headerlink" title="hexo命令"></a>hexo命令</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"># 常用命令</span><br><span class="line">$ hexo help # 查看帮助</span><br><span class="line">$ hexo new &quot;blog_name&quot; # 新建文章</span><br><span class="line">$ hexo new page &quot;page_name&quot; # 新建页面</span><br><span class="line">$ hexo generate # 生成静态页面至public目录</span><br><span class="line">$ hexo server # 开启预览访问端口（默认端口4000，&apos;ctrl + c&apos;关闭server）</span><br><span class="line">$ hexo deploy # 部署到GitHub</span><br><span class="line">$ hexo version # 查看Hexo的版本</span><br><span class="line"></span><br><span class="line"># 命令缩写</span><br><span class="line">hexo n &gt;&gt; hexo new</span><br><span class="line">hexo g &gt;&gt; hexo generate</span><br><span class="line">hexo s &gt;&gt; hexo server</span><br><span class="line">hexo d &gt;&gt; hexo deploy</span><br><span class="line"></span><br><span class="line"># 命令组合</span><br><span class="line">$ hexo s -g #生成并本地预览</span><br><span class="line">$ hexo d -g #生成并上传</span><br></pre></td></tr></table></figure>
+<h2 id="config-yml"><a href="#config-yml" class="headerlink" title="_config.yml"></a>_config.yml</h2><p>_config.yml是博客样式的配置文件，文件中的注释已经说明每个参数的用途，再次不做缀述，实在不懂的可去 <a href="https://hexo.io/docs/configuration.html" target="_blank" rel="noopener">hexo</a> 官网查看configuration文档。编辑 _config.yml 的时候需要注意一下两点：</p>
+<ol>
+<li><strong>冒号后面必须有一个空格，否则hexo可能会出问题。</strong></li>
+<li><strong>每次编辑完_config.yml之后，记得校验一下YAML文件格式，可以使用脚本或者YAML online。如果YAML文件格式报错，会导致hexo命令执行时报错。</strong></li>
+</ol>
+<h2 id="编写blog"><a href="#编写blog" class="headerlink" title="编写blog"></a>编写blog</h2><p>进入hexo工程根目录，创建一篇新博文：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new &quot;blog_name&quot;</span><br></pre></td></tr></table></figure></p>
+<p>hexo-cli会echo博文所在物理路径：<br><img src="/resourse/hexo/initialize/4.png" alt="img4"><br>接下来编辑的博客就可以了（编辑博客使用markdown语法），可以直接使用EMACS或者Vim，当然也可以用你常用的编辑器。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ emacs ~/work/hexo/source/_posts/hexo-initialize.md</span><br></pre></td></tr></table></figure></p>
+<h2 id="部署bolg"><a href="#部署bolg" class="headerlink" title="部署bolg"></a>部署bolg</h2><h3 id="配置SSH-Key"><a href="#配置SSH-Key" class="headerlink" title="配置SSH Key"></a>配置SSH Key</h3><p><strong>通过GitHub进行部署需要使用ssh方案（根据hexo官方文档，deploy并不支持GitHub的https方案）。</strong></p>
+<p>检查本机已生成过ssh密钥<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cd ~/. ssh</span><br></pre></td></tr></table></figure></p>
+<p>如果有，直接copy<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cat ~/.ssh/id_rsa.pub |pbcopy</span><br></pre></td></tr></table></figure></p>
+<p>如果没有，生成SSH Key<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C &quot;#email#&quot;</span><br></pre></td></tr></table></figure></p>
+<p>再进行copy，然后将复制ssh公钥配置到你的GitHub。<br><img src="/resourse/hexo/initialize/5.png" alt="img5"><img src="/resourse/hexo/initialize/6.png" alt="img6"><img src="/resourse/hexo/initialize/7.png" alt="img7"></p>
+<p>检测是否SSH Key是否配置成功<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh -T git@github.com</span><br></pre></td></tr></table></figure></p>
+<p>如提示<br><code>Are you sure you want to continue connecting (yes/no)?</code><br>输入yes，配置成功输出：<br><code>Hi liuxianan! You&#39;ve successfully authenticated, but GitHub does not provide shell access.</code><br>失败则会挂起当前执行进程，<code>Clt</code>+<code>c</code>退出即可。</p>
+<h3 id="config-hexo-deployment"><a href="#config-hexo-deployment" class="headerlink" title="config hexo deployment"></a>config hexo deployment</h3><p>由于我们使用“hexo”+“GitHub Page”搭建blog，需要依赖于git进行部署，部署之前主要配置git依赖，编辑 _config.yml 的 deploy 配置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repository: git@github.com:wliu6/wliu6.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure></p>
+<p>如果想部署到其他云服务器可以参考：<a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">deployment</a></p>
+<p>部署命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo d -g</span><br></pre></td></tr></table></figure></p>
+<h2 id="访问bolg"><a href="#访问bolg" class="headerlink" title="访问bolg"></a>访问bolg</h2><h3 id="使用GitHub-Page"><a href="#使用GitHub-Page" class="headerlink" title="使用GitHub Page"></a>使用GitHub Page</h3><p>使用<strong>GitHub&ensp;Page</strong>访问博客，只需要将已经写好的博客部署到之前注册号的“GitHub&ensp;reop”，使用<code>username.github.io</code>访问即可。</p>
+<h3 id="使用自己注册的域名"><a href="#使用自己注册的域名" class="headerlink" title="使用自己注册的域名"></a>使用自己注册的域名</h3><p>在GitHub Page repo<a href="https://help.github.com/articles/adding-or-removing-a-custom-domain-for-your-github-pages-site/" target="_blank" rel="noopener">添加域名</a>，域名是你之前注册好的。<br><img src="/resourse/hexo/initialize/8.png" alt="img8"><br><img src="/resourse/hexo/initialize/9.png" alt="img9"></p>
+<p>在站点目录下创建CNAME文件，将域名写入，由于使用“hexo” + “GitHub Page”搭建博客，CNAME文件应该放在source目录下，以防每次部署时被覆盖。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ cd hexo_project_dir/hexo/source</span><br><span class="line">$ touch CNAME</span><br><span class="line">$ vim CNAME</span><br><span class="line">$ i # 进入编辑模式，输入域名</span><br><span class="line">$ ESC # 退出编辑模式</span><br><span class="line">$ :wq # 退出并保存</span><br></pre></td></tr></table></figure></p>
+<p>获取博客站点IP<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ping username.github.io</span><br></pre></td></tr></table></figure></p>
+<p>最后，进入你注册域名的云服务器站点的管理台，编辑域名解析，A文件记录IP，CNAME记录域名；<br><img src="/resourse/hexo/initialize/10.png" alt="img10"></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/hexo/" rel="tag"># hexo</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2015/12/10/cocoapods-issue2-md/" rel="prev" title="CocoaPods Error —— 指定版本问题">
+      <i class="fa fa-chevron-left"></i> CocoaPods Error —— 指定版本问题
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2016/05/21/hexo-image/" rel="next" title="hexo 使用图片">
+      hexo 使用图片 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#准备工作"><span class="nav-number">1.</span> <span class="nav-text">准备工作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Dependencies"><span class="nav-number">1.1.</span> <span class="nav-text">Dependencies</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Optional"><span class="nav-number">1.2.</span> <span class="nav-text">Optional</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#创建GitHub-page仓库"><span class="nav-number">2.</span> <span class="nav-text">创建GitHub page仓库</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Blog-Compiling"><span class="nav-number">3.</span> <span class="nav-text">Blog Compiling</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#全局安装hexo"><span class="nav-number">3.1.</span> <span class="nav-text">全局安装hexo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#初始化hexo工程"><span class="nav-number">3.2.</span> <span class="nav-text">初始化hexo工程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hexo命令"><span class="nav-number">3.3.</span> <span class="nav-text">hexo命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#config-yml"><span class="nav-number">3.4.</span> <span class="nav-text">_config.yml</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编写blog"><span class="nav-number">3.5.</span> <span class="nav-text">编写blog</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#部署bolg"><span class="nav-number">3.6.</span> <span class="nav-text">部署bolg</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#配置SSH-Key"><span class="nav-number">3.6.1.</span> <span class="nav-text">配置SSH Key</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#config-hexo-deployment"><span class="nav-number">3.6.2.</span> <span class="nav-text">config hexo deployment</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#访问bolg"><span class="nav-number">3.7.</span> <span class="nav-text">访问bolg</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用GitHub-Page"><span class="nav-number">3.7.1.</span> <span class="nav-text">使用GitHub Page</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用自己注册的域名"><span class="nav-number">3.7.2.</span> <span class="nav-text">使用自己注册的域名</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">王六六</p>
+  <div class="site-description" itemprop="description">做个有知识的流氓丨娶个有气质的文盲</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">王六六</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

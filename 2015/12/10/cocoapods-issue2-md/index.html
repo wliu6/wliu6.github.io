@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.pirat6.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="使用pod安装依赖，其中&amp;#39;xxxSDK&amp;#39;仓库指定版本为&amp;#39;1.2.1&amp;#39;，但实际安装的版本是&amp;#39;1.2.6&amp;#39;。本文就此问题，探索一下原因。">
+<meta name="keywords" content="iOS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CocoaPods Error —— 指定版本问题">
+<meta property="og:url" content="http://blog.pirat6.com/2015/12/10/cocoapods-issue2-md/index.html">
+<meta property="og:site_name" content="w66&#39;s blog">
+<meta property="og:description" content="使用pod安装依赖，其中&amp;#39;xxxSDK&amp;#39;仓库指定版本为&amp;#39;1.2.1&amp;#39;，但实际安装的版本是&amp;#39;1.2.6&amp;#39;。本文就此问题，探索一下原因。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://blog.pirat6.com/resourse/iOS/Cocoapods/3.png">
+<meta property="og:updated_time" content="2021-04-21T08:59:21.057Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CocoaPods Error —— 指定版本问题">
+<meta name="twitter:description" content="使用pod安装依赖，其中&amp;#39;xxxSDK&amp;#39;仓库指定版本为&amp;#39;1.2.1&amp;#39;，但实际安装的版本是&amp;#39;1.2.6&amp;#39;。本文就此问题，探索一下原因。">
+<meta name="twitter:image" content="http://blog.pirat6.com/resourse/iOS/Cocoapods/3.png">
+
+<link rel="canonical" href="http://blog.pirat6.com/2015/12/10/cocoapods-issue2-md/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>CocoaPods Error —— 指定版本问题 | w66's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">w66's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">A man, will eventually become pirate king.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://blog.pirat6.com/2015/12/10/cocoapods-issue2-md/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="王六六">
+      <meta itemprop="description" content="做个有知识的流氓丨娶个有气质的文盲">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="w66's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CocoaPods Error —— 指定版本问题
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2015-12-10 20:28:30" itemprop="dateCreated datePublished" datetime="2015-12-10T20:28:30+08:00">2015-12-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-04-21 16:59:21" itemprop="dateModified" datetime="2021-04-21T16:59:21+08:00">2021-04-21</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/development/" itemprop="url" rel="index"><span itemprop="name">development</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote>
+<p>使用pod安装依赖，其中<code>&#39;xxxSDK&#39;</code>仓库指定版本为<code>&#39;1.2.1&#39;</code>，但实际安装的版本是<code>&#39;1.2.6&#39;</code>。本文就此问题，探索一下原因。</p>
+</blockquote>
+<a id="more"></a>
+<hr>
+<p><br></p>
+<h1 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h1><p>最近公司项目的某个模块做了大的改动，两组人在两个分支上进行并行开发。通过测试及功能验收后，产品部门打算将这两个大的功能改动作为一版本发布。</p>
+<p>在合并代码过程中，<code>Podfile.lock</code>文件冲突，处理了冲突，发现执行<code>pod install</code>后提示<code>Podfile.lock</code>文件语法有问题。</p>
+<p><br></p>
+<h1 id="尝试解决问题"><a href="#尝试解决问题" class="headerlink" title="尝试解决问题"></a>尝试解决问题</h1><p>程序🐵偷懒天性使然，直接<code>mv Podfile.lock ~/.Trash</code>，再重新执行<code>pod install</code>。完美，安装成功，真是愉快的一天~~~</p>
+<p>生活总是这么有趣，编译项目时发现<code>&#39;xxxSDK&#39;</code>的public接口找不到了。查询了下<code>&#39;xxxSDK&#39;</code>的版本更新日志，找找差异原因。原来是该框架在<code>&#39;1.2.5&#39;</code>版本进行重构，public接口的命名变了。为了不影响上线时间，决定将仓库指定为对于项目稳定的<code>&#39;1.2.1&#39;</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod &apos;xxxSDK&apos;, &apos;~&gt; 1.2.1&apos;</span><br></pre></td></tr></table></figure></p>
+<p>重新执行<code>pod install</code>，编译项目发现依然找不到<code>&#39;xxxSDK&#39;</code>的<code>-autoLoginWith:</code>接口，真刺激！！！</p>
+<p><br></p>
+<h1 id="进一步分析问题"><a href="#进一步分析问题" class="headerlink" title="进一步分析问题"></a>进一步分析问题</h1><p>出现问题总是要解决的，接下来继续探索新问题…</p>
+<p>从<code>github</code>直接将<code>&#39;xxxSDK&#39;</code>的代码仓库clone到本地。分别diff该仓库的各个tag分支和公司项目依赖的代码仓库（Tips：项目编译时依赖的代码仓库，位于项目路径下的Pods文件夹下），最后找到实际上目前项目依赖的代码依然是<code>&#39;1.2.6&#39;</code>版本。</p>
+<p>不死心，继续尝试删掉<code>user/work/XXX/Pods/</code>目录下的依赖重新安装依赖<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pod install --verbose</span><br></pre></td></tr></table></figure></p>
+<p>使用verbose option，等到install进程的更详细输出，从输出可以看到，重新安装依赖的版本依旧是<code>&#39;1.2.6&#39;</code>。</p>
+<p>无奈之下只能去<code>CocoaPods</code>官网去查文档了，找到<a href="https://guides.cocoapods.org/using/the-podfile.html" target="_blank" rel="noopener">有效信息</a>。使用<code>~&gt;</code>语法指定版本，<code>Podfile.lock</code>文件才会对<code>pod install</code>进程进行强制限制，而在开发过程中经常使用的<code>Podfile</code>文件主要作用建立依赖库的引用关系的，对于依赖的版本的限制相对较弱。</p>
+<p>举个例子，例如版本<code>1.2.6</code>，主版本号是1，次版本号是2，修订版本号是6。<code>Podfile</code>文件只限制到次版本号，也就是说之前在<code>Podfile</code>文件指定为版本<code>&#39;1.2.1&#39;</code>，但是实际安装的依赖版本会是<code>&#39;1.2.x&#39;</code>次版本系列的修订版本号最大的仓库。看一下<code>Podfile.lock</code>文件的内容，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vim -R Podfile.lock</span><br></pre></td></tr></table></figure></p>
+<p>会看到<code>- xxxSDK (~&gt; 1.2.6)</code>。</p>
+<p><br></p>
+<h1 id="解决问题"><a href="#解决问题" class="headerlink" title="解决问题"></a>解决问题</h1><table>
+<thead>
+<tr>
+<th>方法一</th>
+<th>方法二</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>将<code>Podfile.lock</code>文件中的<code>- xxxSDK (~&gt; 1.2.6)</code>修改成<code>- xxxSDK (~&gt; 1.2.1)</code>，重新安装依赖，nice，完美解决问题。</td>
+<td><code>Podfile</code>文件中的<code>pod &#39;xxxSDK&#39;, &#39;~&gt; 1.2.1&#39;</code>修改成<code>pod &#39;xxxSDK&#39;, &#39;1.2.1&#39;</code></td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>基于这个问题汇总了一下<code>CocoaPods</code>的<code>Podfile</code>文件的语法：</p>
+<p>1.模糊版本指定:</p>
+<pre><code>&apos;&gt; 0.1&apos; —— 任一高于0.1版的包；
+&apos;&gt;= 0.1&apos; —— 0.1版的包或任一高于0.1版的包；
+&apos;&lt; 0.1&apos; —— 任一低于0.1版的包；
+&apos;&lt;= 0.1&apos; —— 0.1版的包或任一低于0.1版的包；
+</code></pre><p>2.乐观的版本指定（语法为<code>~&gt;</code>）:</p>
+<pre><code>&apos;~&gt; 0.1.2&apos; —— 高于0.1.2，低于0.2的包；
+&apos;~&gt; 0.1&apos; —— 高于0.1，低于1.0的包；
+&apos;~&gt; 0&apos; —— 高于0，跟没有指定一样；
+</code></pre><p>3.直接（强制）指定</p>
+<pre><code>&apos;0.1.2&apos; —— 0.1.2版的包；
+</code></pre><p><br></p>
+<h1 id="pick知识点"><a href="#pick知识点" class="headerlink" title="pick知识点"></a>pick知识点</h1><p><code>CocoaPods</code>的版本控制基于<a href="https://semver.org/" target="_blank" rel="noopener">Semantic Versioning 2.0.0</a>，分为主版本、次版本、修订版本。</p>
+<pre><code>主版本号：当你做了不兼容的 API 修改；
+次版本号：当你做了向下兼容的功能性新增；
+修订版本号：当你做了向下兼容的问题修正；
+</code></pre><p>故相对规范的开源仓库，重新设计架构都会更新主版本号。建议各位玩开源的熊蝶再发布版本的时候注意一下<a href="https://semver.org/" target="_blank" rel="noopener"><code>CocoaPods所使用的版本准则</code></a>。</p>
+<p><br></p>
+<h1 id="Tsukkomi"><a href="#Tsukkomi" class="headerlink" title="Tsukkomi"></a>Tsukkomi</h1><p>吐槽一下环信，一家付费提供IM服务的公司，于<code>3.3.7</code>到<code>3.3.8</code>版本修改了其SDK的public属性<code>[EMClient isLoggedIn]</code>的语义直接变更。</p>
+<p><img src="/resourse/iOS/Cocoapods/3.png" alt="img3"><br>既然做付费服务，那么态度能否专业一点。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/iOS/" rel="tag"># iOS</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2016/05/02/hexo-initialize/" rel="next" title="hexo搭建博客">
+      hexo搭建博客 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#场景"><span class="nav-number">1.</span> <span class="nav-text">场景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#尝试解决问题"><span class="nav-number">2.</span> <span class="nav-text">尝试解决问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#进一步分析问题"><span class="nav-number">3.</span> <span class="nav-text">进一步分析问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解决问题"><span class="nav-number">4.</span> <span class="nav-text">解决问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pick知识点"><span class="nav-number">6.</span> <span class="nav-text">pick知识点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Tsukkomi"><span class="nav-number">7.</span> <span class="nav-text">Tsukkomi</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">王六六</p>
+  <div class="site-description" itemprop="description">做个有知识的流氓丨娶个有气质的文盲</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">王六六</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

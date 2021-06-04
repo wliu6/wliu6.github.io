@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.pirat6.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="本文介绍如何创建CocoaPods私有库，适合使用CocoaPods私有库。">
+<meta name="keywords" content="iOS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CocoaPods —— 创建私有库">
+<meta property="og:url" content="http://blog.pirat6.com/2016/07/20/cocoapods-private-repo-md/index.html">
+<meta property="og:site_name" content="w66&#39;s blog">
+<meta property="og:description" content="本文介绍如何创建CocoaPods私有库，适合使用CocoaPods私有库。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2021-04-21T08:59:21.057Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CocoaPods —— 创建私有库">
+<meta name="twitter:description" content="本文介绍如何创建CocoaPods私有库，适合使用CocoaPods私有库。">
+
+<link rel="canonical" href="http://blog.pirat6.com/2016/07/20/cocoapods-private-repo-md/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>CocoaPods —— 创建私有库 | w66's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">w66's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">A man, will eventually become pirate king.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://blog.pirat6.com/2016/07/20/cocoapods-private-repo-md/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="王六六">
+      <meta itemprop="description" content="做个有知识的流氓丨娶个有气质的文盲">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="w66's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CocoaPods —— 创建私有库
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-07-20 13:36:29" itemprop="dateCreated datePublished" datetime="2016-07-20T13:36:29+08:00">2016-07-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-04-21 16:59:21" itemprop="dateModified" datetime="2021-04-21T16:59:21+08:00">2021-04-21</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/development/" itemprop="url" rel="index"><span itemprop="name">development</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote>
+<p>本文介绍如何创建<code>CocoaPods</code>私有库，适合使用<code>CocoaPods</code>私有库。</p>
+</blockquote>
+<a id="more"></a>
+<hr>
+<p><br></p>
+<h1 id="创建CocoaPods私有库"><a href="#创建CocoaPods私有库" class="headerlink" title="创建CocoaPods私有库"></a>创建CocoaPods私有库</h1><p>业务需求，需要开发一些iOS的私有功能repo，供组织内部使用，并不对外开源，汇总了一下<code>CocoaPods</code>私有库的相关内容。</p>
+<h2 id="创建library"><a href="#创建library" class="headerlink" title="创建library"></a>创建library</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pod lib create &lt;repo-name&gt;</span><br></pre></td></tr></table></figure>
+<pre><code>What platform do you want to use?? [ iOS / macOS ]
+iOS
+What language do you want to use?? [ Swift / ObjC ]
+ObjC
+Would you like to provide a demo application with your library? [ Yes / No ]
+yes
+Which testing frameworks will you use? [ Specta / Kiwi / None ]
+Kiwi
+Would you like to do view based testing? [ Yes / No ]
+No
+What is your class prefix?
+BZ
+</code></pre><p>简单介绍一下创建时可选项，第一个是想要使用的平台，第二个是想要使用的编程语言，第三个是是否为你的<code>library</code>创建一个<code>demo</code>工程；第四个是选择一个你习惯使用的单元测试框架，提供了两个常用的<code>BDD</code>框架；第五个是是否使用非死不可的<code>FBSnapshotTestCase</code>UI测试框架；第六个是设置一个类目前缀。</p>
+<h2 id="修改-podspec文件的信息"><a href="#修改-podspec文件的信息" class="headerlink" title="修改.podspec文件的信息"></a>修改.podspec文件的信息</h2><p>执行<code>pod lib create</code>命令会自动生成.podspec文件，是一个配置文件。新生成的<code>.podspec</code>包含所有参数，<code>.podspec</code>文件中有每个参数的注释。实际使用时，需要进行裁剪。常用的有</p>
+<pre><code>1. name —— library的名字；
+2. version —— library的版本号；
+3. summary —— library的简介；
+4. platform —— library支持的平台；
+5. source —— library的源码引用；
+6. license —— library的开源协议；
+...
+</code></pre><p>示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Pod::Spec.new do |s|</span><br><span class="line">  s.name         = &quot;KSZCMediateRouter&quot;</span><br><span class="line">  s.version      = &quot;0.1.0&quot;</span><br><span class="line">  s.summary      = &quot;路由中间件，target通信中介者.&quot;</span><br><span class="line">  s.platform     = :ios, &apos;6.0&apos;</span><br><span class="line">  s.description  = &lt;&lt;-DESC</span><br><span class="line">                    提供组件间通信，使用成本极低，支持常量参数，支持直接调用类方法。</span><br><span class="line">                   DESC</span><br><span class="line">  s.homepage     = &quot;https://www.kaishiba.com/&quot;</span><br><span class="line">  s.license      = &#123; :type =&gt; &quot;GPL&quot;, :file =&gt; &quot;./LICENSE&quot; &#125;</span><br><span class="line">  s.author       = &quot;wliu6&quot;</span><br><span class="line">  s.source       = &#123; :git =&gt; &quot;http://gitlab.kaistart.net/iOS/KSZCMediateRouter.git&quot;, :tag =&gt; &quot;#&#123;s.version&#125;&quot; &#125;</span><br><span class="line">  s.prefix_header_contents = &apos;#import &lt;Foundation/Foundation.h&gt;&apos;</span><br><span class="line">  s.source_files  = &quot;KSZCMediateRouter/**/*.&#123;h,m&#125;&quot;</span><br><span class="line">end</span><br></pre></td></tr></table></figure></p>
+<p><br></p>
+<h1 id="上传CocoaPods私有库"><a href="#上传CocoaPods私有库" class="headerlink" title="上传CocoaPods私有库"></a>上传CocoaPods私有库</h1><h2 id="添加repo"><a href="#添加repo" class="headerlink" title="添加repo"></a>添加repo</h2><p>由于开发的是私有库，所以不会打包上传到<a href="https://github.com/CocoaPods/Specs" target="_blank" rel="noopener">CocoaPods Public Specs Repo</a>，而是上传到<code>Private Specs Repo</code>。添加私有repo，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pod repo add &lt;specs-name&gt; &lt;specs-repo-url&gt;</span><br></pre></td></tr></table></figure></p>
+<p>如果还没有<code>Private Specs Repo</code>，建立一个空的<code>git repo</code>即可</p>
+<h2 id="验证library"><a href="#验证library" class="headerlink" title="验证library"></a>验证library</h2><p>开发完成静态类库之后，需要验证一下类库是否符合要求（能否编译通过）。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pod lib lint xxx.podspec</span><br></pre></td></tr></table></figure></p>
+<p>常用option：</p>
+<table>
+<thead>
+<tr>
+<th>option</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>--verbose</td>
+<td>输出更详细的验证报告。</td>
+</tr>
+<tr>
+<td>--use-libraries</td>
+<td>有引用静态库时使用，不然通不过验证。（验证过程默认认为library没有引用静态库）</td>
+</tr>
+<tr>
+<td>--only-errors</td>
+<td>验证过程忽略警告（version&lt;1.0.0）。</td>
+</tr>
+<tr>
+<td>--allow-warnings</td>
+<td>验证过程忽略警告（version&gt;=1.0.0）。</td>
+</tr>
+<tr>
+<td>--sources=master,<your-source></your-source></td>
+<td>library使用的源（如果library引用了私有源的库，必须传入源参数）。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="上传library"><a href="#上传library" class="headerlink" title="上传library"></a>上传library</h2><p>验证后，上传直接执行如下命令即可：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod repo push &lt;specs-name&gt; xxx.podspec</span><br></pre></td></tr></table></figure>
+<p>常用option：</p>
+<table>
+<thead>
+<tr>
+<th>option</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>--verbose</td>
+<td>输出更详细的验证报告。</td>
+</tr>
+<tr>
+<td>--use-libraries</td>
+<td>有引用静态库时使用，不然通不过验证。（验证过程默认认为library没有引用静态库）</td>
+</tr>
+<tr>
+<td>--only-errors</td>
+<td>验证过程忽略警告（version&lt;1.0.0）。</td>
+</tr>
+<tr>
+<td>--allow-warnings</td>
+<td>验证过程忽略警告（version&gt;=1.0.0）。</td>
+</tr>
+<tr>
+<td>--sources=master,<your-source></your-source></td>
+<td>library使用的源（如果library引用了私有源的库，必须传入源参数）。</td>
+</tr>
+</tbody>
+</table>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/iOS/" rel="tag"># iOS</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2016/06/12/iOS-VariableParams/" rel="prev" title="iOS Variable Argument">
+      <i class="fa fa-chevron-left"></i> iOS Variable Argument
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2017/01/05/iOS-compileIssue-1/" rel="next" title="xcodebuild issue (1) —— unable to find utility "PackageApplication"">
+      xcodebuild issue (1) —— unable to find utility "PackageApplication" <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#创建CocoaPods私有库"><span class="nav-number">1.</span> <span class="nav-text">创建CocoaPods私有库</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建library"><span class="nav-number">1.1.</span> <span class="nav-text">创建library</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改-podspec文件的信息"><span class="nav-number">1.2.</span> <span class="nav-text">修改.podspec文件的信息</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#上传CocoaPods私有库"><span class="nav-number">2.</span> <span class="nav-text">上传CocoaPods私有库</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#添加repo"><span class="nav-number">2.1.</span> <span class="nav-text">添加repo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#验证library"><span class="nav-number">2.2.</span> <span class="nav-text">验证library</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#上传library"><span class="nav-number">2.3.</span> <span class="nav-text">上传library</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">王六六</p>
+  <div class="site-description" itemprop="description">做个有知识的流氓丨娶个有气质的文盲</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">王六六</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
